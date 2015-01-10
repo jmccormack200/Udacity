@@ -152,6 +152,15 @@ if __name__ == '__main__':
 		
 	
 	repeat_times = 10
+	
+	##############################
+	#
+	# Added in Plotting software to
+	# visualise the execution. 
+	# Hopefully will animate it 
+	# in the future.
+	#
+	##############################
 	for a in range(repeat_times):
 		fig1 = plt.figure()
 	
@@ -178,7 +187,7 @@ if __name__ == '__main__':
 		plt.show()
 		print eval(myrobot, p)
 		
-	#Attempts at plotting
+
 
 
 
