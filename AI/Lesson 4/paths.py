@@ -15,39 +15,85 @@
 #   0 = Navigable space
 #   1 = Occupied space
 
+import copy
+
 grid = [[0, 0, 1, 0, 0, 0],
         [0, 0, 1, 0, 0, 0],
         [0, 0, 0, 0, 1, 0],
         [0, 0, 1, 1, 1, 0],
         [0, 0, 0, 0, 1, 0]]
+		
+expand = [[0, 0, 1, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0],
+        [0, 0, 1, 1, 1, 0],
+        [0, 0, 0, 0, 1, 0]]
+
 init = [0, 0]
 goal = [len(grid)-1, len(grid[0])-1]
 cost = 1
 
-delta = [[-1, 0], # go up
-         [ 0,-1], # go left
-         [ 1, 0], # go down
-         [ 0, 1]] # go right
 
-delta_name = ['^', '<', 'v', '>']
+def search(grid,init,goal,cost):
+	search_array = [[0, init[0], init[1]]]
+	grid[init[0]][init[1]] = -1
 
-def search(grid,test,goal,cost):
-	current_point = test
-	goal_not_found = True
-	depth = 1
-	while(goal_not_found):
-		if (grid[current_point[0]][current_point[1]]) == 0:
-			grid[current_point[0]][current_point[1]] = X
-			if current_point[0] <= len(current_point):
-				current_point[0]+= 1
-		goal_not_found = False
-	path = "Test"
-	return path
+	expand_count = 0
 
-
-
-
-if __name__ == '__main__':
-	print "scoop whoop"
-	print search(grid, init, goal, cost)
+	row =  len(grid)
+	column = len(grid[0])
+	
+	not_found = True
+	
+	while(not_found):
+	
+		try:
+			current_node = search_array.pop(0)
+			expand[current_node[1]][current_node[2]] = expand_count
+			expand_count += 1
+			
+			if current_node[1] == goal[0] and current_node[2] == goal[1]:
+				return expand
+				'''
+				for row in expand:
+					print row
+				return current_node
+				'''
+		except:
+			return "fail"
+			
+		#	Below is useful for seeing the progression
+		#print "current node = " + str(current_node)			
+			
+		#Check all directions and append appropriate ones to the list, will not add
+		#anywhere that is marked as blocked (1) or already checked (-1)
+		
+		#Check Left
+		if (current_node[1] - 1 >= 0):
+			if (grid[current_node[1]-1][current_node[2]] == 0):
+				search_array.append([current_node[0] + 1, current_node[1] - 1, current_node[2]])
+				grid[current_node[1] - 1][current_node[2]] = -1
+			
+		#Check Right
+		if (current_node[1] + 1 < row):
+			if (grid[current_node[1] + 1][current_node[2]] == 0):
+				search_array.append([current_node[0] + 1, current_node[1] + 1, current_node[2]])
+				grid[current_node[1] + 1][current_node[2]] = -1
+		
+		#Check Up
+		if (current_node[2] - 1 >= 0):
+			if (grid[current_node[1]][current_node[2] - 1] == 0):
+				search_array.append([current_node[0] + 1, current_node[1], current_node[2]])
+				grid[current_node[1]][current_node[2] - 1] = -1
+		
+		#Check Down
+		if (current_node[2] + 1 < column):
+			if (grid[current_node[1]][current_node[2] + 1] == 0):
+				search_array.append([current_node[0] + 1, current_node[1], current_node[2] + 1])
+				grid[current_node[1]][current_node[2] + 1] = -1
+		
+		
+if __name__ == "__main__":
+	print search(grid, [0,0], goal, cost)
+	
 	
