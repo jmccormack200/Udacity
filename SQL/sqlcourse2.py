@@ -100,6 +100,11 @@ def build_link_index():
     for l in links:
         output[l.id] = l
     return output
+
+def add_new_link(link):
+    links.append(link)
+    link_index[link.id] = link
+
 	
 if __name__ == '__main__':
 	print link_by_id(22)
