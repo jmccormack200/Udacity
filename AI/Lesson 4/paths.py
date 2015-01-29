@@ -28,6 +28,12 @@ expand = [[0, 0, 1, 0, 0, 0],
         [0, 0, 0, 0, 1, 0],
         [0, 0, 1, 1, 1, 0],
         [0, 0, 0, 0, 1, 0]]
+search = [[,,,,,],
+        [,,,,,],
+        [,,,,,],
+        [,,,,,],
+        [,,,,,]]
+		 
 
 init = [0, 0]
 goal = [len(grid)-1, len(grid[0])-1]
@@ -54,11 +60,6 @@ def search(grid,init,goal,cost):
 			
 			if current_node[1] == goal[0] and current_node[2] == goal[1]:
 				return expand
-				'''
-				for row in expand:
-					print row
-				return current_node
-				'''
 		except:
 			return "fail"
 			
